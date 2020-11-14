@@ -73,6 +73,19 @@ class ProjectCard {
     this.project = project;
   }
 
+  alertMoreInfo() {
+    alert(this.project.extraInfo);
+  }
+
+  toggleProjectStatus() {
+    this.project.toggleStatus();
+    // REVISIT
+    document.getElementById('app').textContent = null;
+    // REVISIT
+    App.activeProjectSection.render(App.projectList);
+    App.completedProjectSection.render(App.projectList);
+  }
+
   render() {
     const projectCard = document.createElement('li');
     projectCard.classList.add('card');
@@ -86,18 +99,8 @@ class ProjectCard {
 
     const buttons = projectCard.querySelectorAll('button');
     
-    buttons[0].addEventListener('click', () => {
-      alert(this.project.extraInfo);
-    });
-
-    buttons[1].addEventListener('click', () => {
-      this.project.toggleStatus();
-      // REVISIT
-      document.getElementById('app').textContent = null;
-      // REVISIT
-      App.activeProjectSection.render(App.projectList);
-      App.completedProjectSection.render(App.projectList);
-    });
+    buttons[0].addEventListener('click', () => { this.alertMoreInfo() });
+    buttons[1].addEventListener('click', () => { this.toggleProjectStatus() });
 
     return projectCard;
   }
