@@ -97,10 +97,11 @@ class ProjectCard {
       <button>${this.project.completed ? "Mark Active" : "Mark Completed"}</button>
     `;
 
-    const buttons = projectCard.querySelectorAll('button');
+    const moreInfoBtn = projectCard.querySelector('button:first-of-type');
+    moreInfoBtn.addEventListener('click', () => { this.alertMoreInfo() });
     
-    buttons[0].addEventListener('click', () => { this.alertMoreInfo() });
-    buttons[1].addEventListener('click', () => { this.toggleProjectStatus() });
+    const changeStatusBtn = projectCard.querySelector('button:last-of-type');
+    changeStatusBtn.addEventListener('click', () => { this.toggleProjectStatus() });
 
     return projectCard;
   }
