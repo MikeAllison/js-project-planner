@@ -108,11 +108,11 @@ button:active {
   margin: 0;
 }
 
-#finished-projects {
+#completed-projects {
   border: 1px solid #535353;
 }
 
-#finished-projects > header {
+#completed-projects > header {
   background: #535353;
   padding: 1rem;
   display: flex;
@@ -120,7 +120,7 @@ button:active {
   align-items: center;
 }
 
-#finished-projects header h2 {
+#completed-projects header h2 {
   color: white;
   margin: 0;
 }
