@@ -91,6 +91,27 @@ button:active {
   background: white;
 }
 
+.tooltip {
+  background: #1e6475;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
+  color: white;
+}
+
+.tooltip > h2, p {
+  margin: 0;
+  padding: 0.5rem 0 0.5rem 0.5em;
+}
+
+.tooltip-arrow {
+  width: 0; 
+  height: 0; 
+  background-color: white;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #1e6475;
+  margin: 0 0 0.5rem 0.7rem;
+}
+
 #active-projects {
   border: 1px solid #1e6475;
 }

@@ -73,15 +73,11 @@ class ProjectCard {
     this.project = project;
   }
 
-  alertMoreInfo() {
-    alert(this.project.extraInfo);
-  }
-
   toggleProjectStatus() {
     this.project.toggleStatus();
-    // REVISIT
+
     document.getElementById('app').textContent = null;
-    // REVISIT
+
     App.activeProjectSection.render(App.projectList);
     App.completedProjectSection.render(App.projectList);
   }
@@ -98,12 +94,35 @@ class ProjectCard {
     `;
 
     const moreInfoBtn = projectCard.querySelector('button:first-of-type');
-    moreInfoBtn.addEventListener('click', () => { this.alertMoreInfo() });
+    moreInfoBtn.addEventListener('click', () => { App.tooltip.render(moreInfoBtn, this.project.extraInfo) });
     
     const changeStatusBtn = projectCard.querySelector('button:last-of-type');
     changeStatusBtn.addEventListener('click', () => { this.toggleProjectStatus() });
 
     return projectCard;
+  }
+}
+
+class Tooltip {
+  render(element, tooltipText) {
+    const renderedTooltip = document.getElementById('tooltip');
+
+    if (renderedTooltip) {
+      renderedTooltip.remove();
+    }
+
+    const tooltip = document.createElement('span');
+    tooltip.id = 'tooltip';
+    tooltip.classList.add('tooltip');
+    tooltip.innerHTML = `
+      <div class="tooltip">
+        <h2>More Info</h2>
+        <p>${tooltipText}</p>
+      </div>
+      <div class="tooltip-arrow">
+    `;
+
+    element.parentElement.insertBefore(tooltip, element);
   }
 }
 
@@ -120,6 +139,7 @@ class App {
   static projectList = new ProjectList();
   static activeProjectSection = new ActiveProjectSection(this.renderHook);
   static completedProjectSection = new CompletedProjectSection(this.renderHook);
+  static tooltip = new Tooltip();
 
   static init() {
     // Seed list
@@ -128,7 +148,6 @@ class App {
       this.projectList.add(project);
     });
 
-    // REVISIT
     this.activeProjectSection.render(this.projectList);
     this.completedProjectSection.render(this.projectList);
   }
