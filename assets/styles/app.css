@@ -103,18 +103,22 @@ button:active {
 .card {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  padding: 1rem;
+  padding: 0.2rem 1rem 1rem 1rem;
   background: white;
 }
 
-.tooltip {
+.tooltip-body {
   background: #1e6475;
   color: white;
+  padding: 0.5rem;
 }
 
-.tooltip > h2, p {
+.tooltip-body > * {
   margin: 0;
-  padding: 0.5rem 0 0.5rem 0.5em;
+}
+
+.tooltip-body > h2 {
+  margin-bottom: 0.5rem;
 }
 
 .tooltip-arrow {

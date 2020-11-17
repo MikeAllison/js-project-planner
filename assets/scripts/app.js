@@ -124,10 +124,9 @@ class Tooltip {
 
   init() {
     const tooltip = document.createElement('span');
-    tooltip.id = 'tooltip';
-    tooltip.classList.add('tooltip', 'hidden');
+    tooltip.classList.add('hidden');
     tooltip.innerHTML = `
-      <div class="tooltip">
+      <div class="tooltip-body">
         <h2>More Info</h2>
         <p>${this.tooltipText}</p>
       </div>
@@ -151,7 +150,6 @@ class App {
   static projectList = new ProjectList();
   static activeProjectSection = new ActiveProjectSection(this.renderHook);
   static completedProjectSection = new CompletedProjectSection(this.renderHook);
-  //static tooltip = new Tooltip();
 
   static init() {
     // Seed list
