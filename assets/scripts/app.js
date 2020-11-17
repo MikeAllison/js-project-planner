@@ -43,6 +43,7 @@ class ActiveProjectSection extends ProjectSection {
       }
     });
 
+    // Append section to div with class 'app'
     this.renderHook.append(projectSectionEl);
   }
 }
@@ -64,6 +65,7 @@ class CompletedProjectSection extends ProjectSection {
       }
     });
 
+    // Append section to div with class 'app'
     this.renderHook.append(projectSectionEl);
   }
 }
@@ -71,6 +73,11 @@ class CompletedProjectSection extends ProjectSection {
 class ProjectCard {
   constructor(project) {
     this.project = project;
+    this.makeDraggable();
+  }
+
+  makeDraggable() {
+    //console.log('drag');
   }
 
   toggleProjectStatus() {
@@ -80,6 +87,11 @@ class ProjectCard {
 
     App.activeProjectSection.render(App.projectList);
     App.completedProjectSection.render(App.projectList);
+  }
+
+  toggleTooltip() {
+    this.previousElementSibling.classList.toggle('hidden');
+    this.innerHTML = (this.innerHTML == 'Close') ? 'More Info' : 'Close';
   }
 
   render() {
@@ -94,7 +106,8 @@ class ProjectCard {
     `;
 
     const moreInfoBtn = projectCard.querySelector('button:first-of-type');
-    moreInfoBtn.addEventListener('click', () => { App.tooltip.render(moreInfoBtn, this.project.extraInfo) });
+    const tooltip = new Tooltip(moreInfoBtn, this.project.extraInfo).init();
+    moreInfoBtn.addEventListener('click', this.toggleTooltip.bind(moreInfoBtn));
     
     const changeStatusBtn = projectCard.querySelector('button:last-of-type');
     changeStatusBtn.addEventListener('click', () => { this.toggleProjectStatus() });
@@ -104,25 +117,24 @@ class ProjectCard {
 }
 
 class Tooltip {
-  render(element, tooltipText) {
-    const renderedTooltip = document.getElementById('tooltip');
+  constructor(boundToElement, tooltipText) {
+    this.boundToElement = boundToElement;
+    this.tooltipText = tooltipText;
+  }
 
-    if (renderedTooltip) {
-      renderedTooltip.remove();
-    }
-
+  init() {
     const tooltip = document.createElement('span');
     tooltip.id = 'tooltip';
-    tooltip.classList.add('tooltip');
+    tooltip.classList.add('tooltip', 'hidden');
     tooltip.innerHTML = `
       <div class="tooltip">
         <h2>More Info</h2>
-        <p>${tooltipText}</p>
+        <p>${this.tooltipText}</p>
       </div>
       <div class="tooltip-arrow">
     `;
 
-    element.parentElement.insertBefore(tooltip, element);
+    this.boundToElement.parentElement.insertBefore(tooltip, this.boundToElement);
   }
 }
 
@@ -139,7 +151,7 @@ class App {
   static projectList = new ProjectList();
   static activeProjectSection = new ActiveProjectSection(this.renderHook);
   static completedProjectSection = new CompletedProjectSection(this.renderHook);
-  static tooltip = new Tooltip();
+  //static tooltip = new Tooltip();
 
   static init() {
     // Seed list

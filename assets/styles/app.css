@@ -73,6 +73,18 @@ button.alt {
   color: #1e6475;
 }
 
+button.add-project {
+  background: #842323;
+  color: white;
+}
+
+button.add-project:hover,
+button.add-project:active {
+  background: white;
+  border-color: #842323;
+  color: #842323;
+}
+
 button:focus {
   outline: none;
 }
@@ -84,6 +96,10 @@ button:active {
   color: white;
 }
 
+.hidden {
+  display: none;
+}
+
 .card {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
@@ -93,7 +109,6 @@ button:active {
 
 .tooltip {
   background: #1e6475;
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
   color: white;
 }
 
@@ -110,6 +125,10 @@ button:active {
   border-right: 20px solid transparent;
   border-top: 20px solid #1e6475;
   margin: 0 0 0.5rem 0.7rem;
+}
+
+#add-project {
+  text-align: right;
 }
 
 #active-projects {
