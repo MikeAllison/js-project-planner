@@ -43,7 +43,7 @@ class ActiveProjectSection extends ProjectSection {
       }
     });
 
-    // REFACTOR (Duplicate code)!!! - Drag/drop functionality
+    // Drag/drop functionality
     const ulEl = projectSectionEl.querySelector('ul');
 
     ulEl.addEventListener('dragover', ev => {
@@ -83,7 +83,7 @@ class CompletedProjectSection extends ProjectSection {
       }
     });
 
-    // REFACTOR (Duplicate code)!!! - Drag/drop functionality
+    // Drag/drop functionality
     const ulEl = projectSectionEl.querySelector('ul');
 
     ulEl.addEventListener('dragover', ev => {
@@ -113,7 +113,6 @@ class ProjectCard {
 
   toggleProjectStatus() {
     this.project.toggleStatus();
-
     App.refresh();
   }
 
@@ -135,7 +134,7 @@ class ProjectCard {
     `;
 
     const moreInfoBtn = projectCard.querySelector('button:first-of-type');
-    const tooltip = new Tooltip(moreInfoBtn, this.project.extraInfo).init();
+    new Tooltip(moreInfoBtn, this.project.extraInfo).init();
     moreInfoBtn.addEventListener('click', this.toggleTooltip.bind(moreInfoBtn));
     
     const changeStatusBtn = projectCard.querySelector('button:last-of-type');
@@ -175,9 +174,9 @@ class Tooltip {
 class App {
   // Seed data
   static projects = [
-    new Project('1', 'Finish the Course', 'Finish the course within the next two weeks.', 'Got lifetime access, but would be nice to finish it soon!'),
-    new Project('2', 'Buy Groceries', 'Don\'t forget to pick up groceries today.', 'Not really a business topic but still important.'),
-    new Project('3', 'Book Hotel', 'Conference takes place in December, don\'t forget to book a hotel.', 'Super important conference!')
+    new Project(1, 'Finish the Course', 'Finish the course within the next two weeks.', 'Got lifetime access, but would be nice to finish it soon!'),
+    new Project(2, 'Buy Groceries', 'Don\'t forget to pick up groceries today.', 'Not really a business topic but still important.'),
+    new Project(3, 'Book Hotel', 'Conference takes place in December, don\'t forget to book a hotel.', 'Super important conference!')
   ];
 
   static renderHook = document.getElementById('app');
