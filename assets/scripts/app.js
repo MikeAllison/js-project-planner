@@ -57,8 +57,6 @@ class ActiveProjectSection extends ProjectSection {
         if (+project.id === +projId) { 
           project.completed = false;
           App.refresh(); 
-          App.activeProjectSection.render(App.projectList);
-          App.completedProjectSection.render(App.projectList);
         }
       });
     });
@@ -99,8 +97,6 @@ class CompletedProjectSection extends ProjectSection {
         if (+project.id === +projId) { 
           project.completed = true;
           App.refresh();
-          App.activeProjectSection.render(App.projectList);
-          App.completedProjectSection.render(App.projectList);
         }
       });
     });
@@ -119,8 +115,6 @@ class ProjectCard {
     this.project.toggleStatus();
 
     App.refresh();
-    App.activeProjectSection.render(App.projectList);
-    App.completedProjectSection.render(App.projectList);
   }
 
   toggleTooltip() {
@@ -205,6 +199,8 @@ class App {
 
   static refresh() {
     this.renderHook.innerHTML = null;
+    this.activeProjectSection.render(App.projectList);
+    this.completedProjectSection.render(App.projectList);
   }
 }
 
