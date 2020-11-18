@@ -16,7 +16,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #423939;
+  background: #535353;
 }
 
 #main-header h1 {
@@ -105,6 +105,11 @@ button:active {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 0.2rem 1rem 1rem 1rem;
   background: white;
+  cursor: grab;
+}
+
+.card:active {
+  cursor: grabbing;
 }
 
 .tooltip-body {

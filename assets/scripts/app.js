@@ -12,7 +12,7 @@ class Project {
   }
 }
 
-class ProjectList{
+class ProjectList {
   projects = [];
 
   add(project) {
@@ -43,6 +43,26 @@ class ActiveProjectSection extends ProjectSection {
       }
     });
 
+    // REFACTOR (Duplicate code)!!! - Drag/drop functionality
+    const ulEl = projectSectionEl.querySelector('ul');
+
+    ulEl.addEventListener('dragover', ev => {
+      ev.preventDefault();
+    });
+
+    ulEl.addEventListener('drop', ev => {
+      ev.preventDefault();
+      const projId = ev.dataTransfer.getData("text/plain");
+      App.projectList.projects.forEach(project => {
+        if (+project.id === +projId) { 
+          project.completed = false;
+          App.refresh(); 
+          App.activeProjectSection.render(App.projectList);
+          App.completedProjectSection.render(App.projectList);
+        }
+      });
+    });
+    
     // Append section to div with class 'app'
     this.renderHook.append(projectSectionEl);
   }
@@ -65,6 +85,26 @@ class CompletedProjectSection extends ProjectSection {
       }
     });
 
+    // REFACTOR (Duplicate code)!!! - Drag/drop functionality
+    const ulEl = projectSectionEl.querySelector('ul');
+
+    ulEl.addEventListener('dragover', ev => {
+      ev.preventDefault();
+    });
+
+    ulEl.addEventListener('drop', ev => {
+      ev.preventDefault();
+      const projId = ev.dataTransfer.getData("text/plain");
+      App.projectList.projects.forEach(project => {
+        if (+project.id === +projId) { 
+          project.completed = true;
+          App.refresh();
+          App.activeProjectSection.render(App.projectList);
+          App.completedProjectSection.render(App.projectList);
+        }
+      });
+    });
+
     // Append section to div with class 'app'
     this.renderHook.append(projectSectionEl);
   }
@@ -73,18 +113,12 @@ class CompletedProjectSection extends ProjectSection {
 class ProjectCard {
   constructor(project) {
     this.project = project;
-    this.makeDraggable();
-  }
-
-  makeDraggable() {
-    //console.log('drag');
   }
 
   toggleProjectStatus() {
     this.project.toggleStatus();
 
-    document.getElementById('app').textContent = null;
-
+    App.refresh();
     App.activeProjectSection.render(App.projectList);
     App.completedProjectSection.render(App.projectList);
   }
@@ -97,7 +131,8 @@ class ProjectCard {
   render() {
     const projectCard = document.createElement('li');
     projectCard.classList.add('card');
-    projectCard.setAttribute('data-extra-info', this.project.extraInfo)
+    projectCard.setAttribute('data-id', this.project.id);
+    projectCard.setAttribute('data-extra-info', this.project.extraInfo);
     projectCard.innerHTML = `
       <h2>${this.project.title}</h2>
       <p>${this.project.description}</p>
@@ -111,6 +146,12 @@ class ProjectCard {
     
     const changeStatusBtn = projectCard.querySelector('button:last-of-type');
     changeStatusBtn.addEventListener('click', () => { this.toggleProjectStatus() });
+
+    // Drag/drop functionality
+    projectCard.setAttribute('draggable', true);
+    projectCard.addEventListener('dragstart', ev => { 
+      ev.dataTransfer.setData('text/plain', ev.target.dataset.id);
+    })
 
     return projectCard;
   }
@@ -140,9 +181,9 @@ class Tooltip {
 class App {
   // Seed data
   static projects = [
-    new Project('p1', 'Finish the Course', 'Finish the course within the next two weeks.', 'Got lifetime access, but would be nice to finish it soon!'),
-    new Project('p2', 'Buy Groceries', 'Don\'t forget to pick up groceries today.', 'Not really a business topic but still important.'),
-    new Project('p3', 'Book Hotel', 'Conference takes place in December, don\'t forget to book a hotel.', 'Super important conference!')
+    new Project('1', 'Finish the Course', 'Finish the course within the next two weeks.', 'Got lifetime access, but would be nice to finish it soon!'),
+    new Project('2', 'Buy Groceries', 'Don\'t forget to pick up groceries today.', 'Not really a business topic but still important.'),
+    new Project('3', 'Book Hotel', 'Conference takes place in December, don\'t forget to book a hotel.', 'Super important conference!')
   ];
 
   static renderHook = document.getElementById('app');
@@ -160,6 +201,10 @@ class App {
 
     this.activeProjectSection.render(this.projectList);
     this.completedProjectSection.render(this.projectList);
+  }
+
+  static refresh() {
+    this.renderHook.innerHTML = null;
   }
 }
 
